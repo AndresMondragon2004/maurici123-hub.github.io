@@ -1,32 +1,22 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<'a'> & {
-  href: string;
-};
+type Props = HTMLAttributes<"a">;
 
 const { href, class: className, ...props } = Astro.props;
-const base = import.meta.env.BASE_URL ?? '/';
-
-// Validar que href existe y construir la URL completa
-if (!href) {
-  throw new Error('HeaderLink component requires an href prop');
-}
-
-// Agregar base a todos los hrefs (excepto URLs externas o que ya tengan base)
-let fullHref = href;
-if (href.startsWith('/')) {
-  fullHref = base !== '/' ? base + href.slice(1) : href;
-} else if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-  // Para rutas relativas sin / inicial
-  fullHref = base !== '/' ? base + href : '/' + href;
-}
-
-// Comparar rutas completas
-const isActive = Astro.url.pathname === fullHref;
+const base = import.meta.env.BASE_URL ?? "/";
+const pathname = Astro.url.pathname.replace(base, "");
+const subpath = pathname.match(/[^\/]+/g);
+const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+// Construir el href con el base path correctamente
+const computedHref = href === "/" ? base : `${base}${href.replace(/^\//, "")}`;
 ---
 
-<a href={fullHref} class:list={[className, { active: isActive }]} {...props}>
+<a
+  href={computedHref}
+  class:list={[className, { active: isActive }]}
+  {...props}
+>
   <slot />
 </a>
 <style>
