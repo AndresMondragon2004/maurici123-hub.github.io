@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import mauricio from '../assets/mau.jpeg';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+const aboutHref = import.meta.env.BASE_URL + 'about';
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 		</br>
 			<a 
-			href="/about"
+			href={aboutHref}
 			class="boton"
 			>
 			Saber más sobre Mauricio

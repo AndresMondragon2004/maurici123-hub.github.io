@@ -10,11 +10,11 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  // Cambiar site al URL de tu repositorio GitHub Page
-  site: 'https://maurici123-hub.github.io/',
+  // URL pública donde se alojará el sitio (GitHub Pages con nombre de repo)
+  site: 'https://maurici123.github.io/maurici123-hub.github.io/',
 
-  // Importante: base path para GitHub Pages
-  base: '/',
+  // Importante: base path para GitHub Pages (prefijo en las rutas)
+  base: '/maurici123-hub.github.io/',
 
   integrations: [mdx(), sitemap(), react()],
 
